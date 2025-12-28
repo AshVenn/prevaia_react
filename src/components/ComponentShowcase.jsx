@@ -257,7 +257,18 @@ import { Textarea } from "./ui/textarea"
 import { Toggle } from "./ui/toggle"
 import { ToggleGroup, ToggleGroupItem } from "./ui/toggle-group"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./ui/tooltip"
-import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from "recharts"
+import {
+  Bar,
+  BarChart,
+  CartesianGrid,
+  Cell,
+  Line,
+  LineChart,
+  Pie,
+  PieChart,
+  XAxis,
+  YAxis,
+} from "recharts"
 
 const chartData = [
   { month: "Jan", risk: 62, vendors: 24 },
@@ -271,6 +282,18 @@ const chartData = [
 const chartConfig = {
   risk: { label: "Risk Score", color: "var(--chart-1)" },
   vendors: { label: "Vendors", color: "var(--chart-2)" },
+}
+
+const pieData = [
+  { name: "Critical", value: 18, fill: "var(--chart-1)" },
+  { name: "Moderate", value: 34, fill: "var(--chart-2)" },
+  { name: "Low", value: 48, fill: "var(--chart-3)" },
+]
+
+const pieConfig = {
+  Critical: { label: "Critical", color: "var(--chart-1)" },
+  Moderate: { label: "Moderate", color: "var(--chart-2)" },
+  Low: { label: "Low", color: "var(--chart-3)" },
 }
 
 const tableRows = [
@@ -1272,7 +1295,7 @@ export default function ComponentShowcase() {
                   Scheduling and data visualization.
                 </p>
               </div>
-              <div className="grid gap-6 lg:grid-cols-2">
+              <div className="grid gap-6 lg:grid-cols-3">
                 <ShowcaseCard
                   title="Calendar"
                   description="Date selection for scheduling."
@@ -1286,8 +1309,8 @@ export default function ComponentShowcase() {
                 </ShowcaseCard>
 
                 <ShowcaseCard
-                  title="Charts"
-                  description="Chart primitives with themed colors."
+                  title="Bar Chart"
+                  description="Snapshot risk and vendor volumes."
                 >
                   <ChartContainer
                     config={chartConfig}
@@ -1314,6 +1337,69 @@ export default function ComponentShowcase() {
                         radius={[6, 6, 0, 0]}
                       />
                     </BarChart>
+                  </ChartContainer>
+                </ShowcaseCard>
+
+                <ShowcaseCard
+                  title="Line Chart"
+                  description="Weekly signal trends."
+                >
+                  <ChartContainer
+                    config={chartConfig}
+                    className="h-65 w-full"
+                  >
+                    <LineChart data={chartData} margin={{ top: 12, right: 12 }}>
+                      <CartesianGrid vertical={false} />
+                      <XAxis
+                        dataKey="month"
+                        tickLine={false}
+                        axisLine={false}
+                      />
+                      <YAxis hide />
+                      <ChartTooltip content={<ChartTooltipContent />} />
+                      <ChartLegend content={<ChartLegendContent />} />
+                      <Line
+                        type="monotone"
+                        dataKey="risk"
+                        stroke="var(--color-risk)"
+                        strokeWidth={2}
+                        dot={false}
+                      />
+                      <Line
+                        type="monotone"
+                        dataKey="vendors"
+                        stroke="var(--color-vendors)"
+                        strokeWidth={2}
+                        dot={false}
+                      />
+                    </LineChart>
+                  </ChartContainer>
+                </ShowcaseCard>
+
+                <ShowcaseCard
+                  title="Pie Chart"
+                  description="Risk distribution by tier."
+                >
+                  <ChartContainer
+                    config={pieConfig}
+                    className="h-65 w-full"
+                  >
+                    <PieChart>
+                      <ChartTooltip content={<ChartTooltipContent />} />
+                      <ChartLegend content={<ChartLegendContent />} />
+                      <Pie
+                        data={pieData}
+                        dataKey="value"
+                        nameKey="name"
+                        innerRadius={50}
+                        outerRadius={80}
+                        stroke="transparent"
+                      >
+                        {pieData.map((entry) => (
+                          <Cell key={entry.name} fill={entry.fill} />
+                        ))}
+                      </Pie>
+                    </PieChart>
                   </ChartContainer>
                 </ShowcaseCard>
               </div>

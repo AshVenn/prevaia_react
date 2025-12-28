@@ -20,7 +20,7 @@ export default function Navbar({ theme, onThemeToggle, font, onFontToggle }) {
               <img
                 src="/Prevaia2-300x50.webp"
                 alt="Prevaia"
-                className="h-6 w-auto max-w-[140px] object-contain drop-shadow-[0_0_12px_rgba(120,255,180,0.25)] sm:h-7 sm:max-w-[180px]"
+                className="h-6 w-auto max-w-35 object-contain drop-shadow-[0_0_12px_rgba(120,255,180,0.25)] sm:h-7 sm:max-w-45"
               />
             </div>
               <div className="hidden md:flex items-center gap-6 text-xs uppercase tracking-[0.3em] text-foreground/60">
